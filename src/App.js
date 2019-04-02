@@ -1,28 +1,45 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { HashRouter as Router, Route } from "react-router-dom";
+import { connect } from "react-redux";
 import './App.css';
 
+import Home from './views/Home'
+import Test from './views/Test'
+import CourseBoard from './views/CourseBoard';
+import Nav from './components/Nav';
+import API from './API';
+import { getUser } from './.data/reducers';
+let {auth} = API;
+
 class App extends Component {
+
+  componentWillMount() {
+    // load the user login state when first load
+    auth.observer().then(user=> {
+      user && getUser(user) 
+    })
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Router>
+        <div className="App">
+          <Nav user={this.props.user}></Nav>
+          <Route path="/" exact component={()=><Home user={this.props.user} />}></Route>
+          <Route path="/test" component={Test}></Route>
+          <Route path="/course" component={CourseBoard}></Route>
+        </div>
+      </Router>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return { posts: state.posts, user: state.user };
+};
+
+export default connect(
+  mapStateToProps
+)(App);
+
+// export default App;
