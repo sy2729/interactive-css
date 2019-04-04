@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Row, Col } from 'antd';
 import { Route } from 'react-router-dom'
-
+import { connect } from "react-redux";
 import { BgContainer } from '../components/style-components';
 import CourseDetail from './CourseDetail';
 
 import SelectionBoard from '../components/course/SelectionBoard';
+import API from '../API';
 // import Intro from '../components/course/Intro';
 // import PreviewPanel from '../components/course/PreviewPanel';
 
@@ -28,34 +29,37 @@ class CourseBoard extends Component {
   constructor() {
     super();
     this.state = {
-      links: ['1','2','3']
+      links: ['Loading...']
     }
   }
 
+  componentWillMount(){
+    setTimeout(()=>{
+      API.getCourseInfo()
+        .then(({data})=>{
+          data.shift();
+          let courseData = data.map(i=>i.name);
+          this.setState({links: courseData})
+        })
+      API.getFinishedStatus(this.props.user.uid)
+        .then(({data})=>{
+          data.shift();
+          this.setState({finished: data})
+        })
+    },1000)
+  }
+
   render(){    
-    // console.log(SelectionBoard)
-    //  (
-    //   <div>
-    //     <Link to={`${this.props.match.url}/01`}>01</Link>
-    //     <Link to={`${this.props.match.url}/02`}>02</Link>
-    //     <Link to={`${this.props.match.url}/03`}>03</Link>
-    //   </div>
-    // )
     return (
       <Board>
+        {/* {} */}
         <Row style={{height: '100%'}}>
           <Route
             exact
             path={this.props.match.path}
-            component={()=> <SelectionBoard url={this.props.match.url} links={this.state.links} />}
+            component={()=> <SelectionBoard url={this.props.match.url} links={this.state.links} finished={this.state.finished} />}
           />
           <Route path={`${this.props.match.path}/:id`} component={CourseDetail} />
-          {/* <Col className="h-100" span={6} style={{minWidth: "300px"}}>
-            <Intro></Intro>
-          </Col>
-          <Col className="h-100" span={10}>
-            <PreviewPanel htmldata={'<h1>test</h1><p>test</p>'}/>
-          </Col> */}
         </Row>
       </Board>
       
@@ -70,4 +74,12 @@ const Board = styled(BgContainer)`
 `;
 
 
-export default CourseBoard
+const mapStateToProps = state => {
+  return { posts: state.posts, user: state.user };
+};
+
+export default connect(
+  mapStateToProps
+)(CourseBoard);
+
+// export default 

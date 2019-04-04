@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 // import '../../js-highlight.css';
 // import ReactMarkdown from 'react-markdown';
 // import CodeBlock from '../CodeBlock';
+import { connect } from "react-redux";
 import { BgContainer, baseButton } from '../style-components';
 import { Icon, message } from 'antd'
 
@@ -24,19 +25,35 @@ import API from '../../API'
 
 class Intro extends Component {
   constructor(){
-    super()
+    super();
+    this.state = {finished: false}
   }
 
   componentWillMount() {
     let path = window.location.hash.split('/');
     this.id = path[2] - 0;
     this.url = path[1];
+
+    setTimeout(()=>{
+      API.getFinishedStatus(this.props.user && this.props.user.uid, this.id)
+      .then(({data})=>{
+        this.setState({finished: data})
+      })
+    }, 1000)
   }
 
   componentWillReceiveProps() {
     let path = window.location.hash.split('/');
     this.id = path[2] - 0;
     this.url = path[1];
+    this.setState({finished: false})
+
+    setTimeout(()=>{
+      API.getFinishedStatus(this.props.user && this.props.user.uid, this.id)
+      .then(({data})=>{
+        this.setState({finished: data})
+      })
+    }, 1000)
   }
 
   //prevent jump to unexisted section
@@ -53,17 +70,26 @@ class Intro extends Component {
     }
   }
 
+  finish() {
+    API.addFinishedStatus(this.props.user.uid, this.id)
+      .then(({data})=>{
+        if(data) {
+          this.setState({finished: true})
+        }
+      })
+  }
+
   render() {
+    
     // console.log(this.state.introData)
     const markedHtml = this.props.introData ? marked(this.props.introData.intro) : null;
     return (
       <BgContainer className="white w-100 h-100 p-20" boxShadow="5px 0px 7px 0px rgba(41,41,41,1)">
         <Icon className="absolute right-1 pointer" style={{fontSize: '2em'}} type="close" onClick={()=>this.props.closeIntro()} />
         <h1 className="m-t-2">{this.props.introData && this.props.introData.name || 'Title - no Data yet - in Dev'}</h1>
-        {/* <p className="t-left">{this.state.introData && this.state.introData['01'].intro}</p> */}
         {this.props.introData ? <div className="t-justify" dangerouslySetInnerHTML={{__html: markedHtml}}/> : 'no data yet - in dev' }
 
-        <Button className="m-2 f-right">
+        <Button className={`m-2 f-right`} onClick={this.finish.bind(this)} finished={this.state.finished}>
           <Icon type="check-circle" />
           <span className="p-w-10">Finish</span>
         </Button>
@@ -77,6 +103,17 @@ class Intro extends Component {
   }
 }
 
-const Button = baseButton([7, 15, 7, 15])
+let Button = baseButton([7, 15, 7, 15])
+Button = styled(Button)`
+  color: ${(props)=>props.finished ? '#42E133' : 'inherited'};
+`
 
-export default Intro
+
+const mapStateToProps = state => {
+  return { posts: state.posts, user: state.user };
+};
+
+export default connect(
+  mapStateToProps
+)(Intro);
+

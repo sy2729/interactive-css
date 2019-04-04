@@ -12,7 +12,7 @@ class Btn extends Component {
       <>
         <Button className="flex align-center justify-space-between" onClick={this.props.onClick}>
           <span className='p-w-10'>{this.props.text}</span>
-          <HightLightCircle />
+          {this.props.finished ? <HightLightCircle /> : null}
         </Button>
       </>
     )

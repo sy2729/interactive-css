@@ -24,7 +24,7 @@ const menu = (<Menu>
     <span onClick={()=>logUserOut()}>LogOut</span>
   </Menu.Item>
   <Menu.Item>
-    <span>PlaceHolderr</span>
+    <Link to='/course'><span>All Course</span></Link>
   </Menu.Item>
 </Menu>)
 /* --------------------*/
