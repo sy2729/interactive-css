@@ -21,10 +21,10 @@ const {
 /* component */
 const menu = (<Menu>
   <Menu.Item>
-    <span onClick={()=>logUserOut()}>LogOut</span>
+    <Link to='/course'><span>All Course</span></Link>
   </Menu.Item>
   <Menu.Item>
-    <Link to='/course'><span>All Course</span></Link>
+    <span onClick={()=>logUserOut()}>LogOut</span>
   </Menu.Item>
 </Menu>)
 /* --------------------*/
