@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Btn from '../Btn';
+import {Icon} from 'antd';
 
 
 class SelectionBoard extends Component {
@@ -18,7 +19,7 @@ class SelectionBoard extends Component {
 
     return (
       <div className="flex m-10 flex-wrap">
-        {List}
+        {this.props.links && this.props.links.length > 0 ? List : <Icon className="white t-3 m-1" type="loading" />}
       </div>
     )
   }

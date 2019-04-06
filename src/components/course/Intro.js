@@ -33,13 +33,7 @@ class Intro extends Component {
     let path = window.location.hash.split('/');
     this.id = path[2] - 0;
     this.url = path[1];
-
-    setTimeout(()=>{
-      API.getFinishedStatus(this.props.user && this.props.user.uid, this.id)
-      .then(({data})=>{
-        this.setState({finished: data})
-      })
-    }, 1000)
+    this.getFinishedStatus();
   }
 
   componentWillReceiveProps() {
@@ -47,7 +41,21 @@ class Intro extends Component {
     this.id = path[2] - 0;
     this.url = path[1];
     this.setState({finished: false})
+    this.getFinishedStatus();
+    
+  }
 
+  shouldComponentUpdate(nextProp, nextState){
+    let newPropName = nextProp.introData && nextProp.introData.name;
+    let oldPropName = this.props.introData && this.props.introData.name;
+    if(newPropName === oldPropName) {
+      return false
+    }else {
+      return true
+    }
+  }
+
+  getFinishedStatus(){
     setTimeout(()=>{
       API.getFinishedStatus(this.props.user && this.props.user.uid, this.id)
       .then(({data})=>{
@@ -81,7 +89,7 @@ class Intro extends Component {
 
   render() {
     
-    // console.log(this.state.introData)
+    console.log(this.props.introData.study)
     const markedHtml = this.props.introData ? marked(this.props.introData.intro) : null;
     return (
       <BgContainer className="white w-100 h-100 p-20" boxShadow="5px 0px 7px 0px rgba(41,41,41,1)">

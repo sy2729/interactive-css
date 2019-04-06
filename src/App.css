@@ -195,7 +195,9 @@ p {font-family: Arial, Helvetica, sans-serif;}
 .white-important {color: #fff !important;}
 .gray {color: #bbb;}
 
-
+.t-1 {font-size: 1em;}
+.t-2 {font-size: 2em;}
+.t-3 {font-size: 3em;}
 .bold {
   font-weight: bold;
 }

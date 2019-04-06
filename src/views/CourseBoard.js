@@ -29,7 +29,7 @@ class CourseBoard extends Component {
   constructor() {
     super();
     this.state = {
-      links: ['Loading...']
+      links: []
     }
   }
 
