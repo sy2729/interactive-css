@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PreviewPanel from "./PreviewPanel";
-import {Select} from "antd";
+import {Select, Icon} from "antd";
 import Codes from "./Codes";
 import { BgContainer } from '../style-components';
 import hljs from 'highlight.js';
@@ -97,7 +97,7 @@ class Course01 extends Component {
             </div>
             {/* ******** The End **********/}
             <div className={`cover white flex align-center justify-center absolute top-0 left-0 w-100 h-100 ${this.state.mode === 'watch' ? '' : 'active'}`}>
-              <h2>Not Usable When Edit</h2>
+              <h2>Not Usable When Edit <Icon className="m-l-1" type="eye-invisible" /></h2>
             </div>
           </BgContainer>
 

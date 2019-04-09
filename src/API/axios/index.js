@@ -39,5 +39,16 @@ export default {
       .then(data=> {
         return data
       })
+  },
+  
+  async updateThumbs(userID, courseID, knowledgeID) {
+    if(!userID || !courseID || !knowledgeID) {return}
+    let query = `/course/${courseID}/study/${knowledgeID}/up`
+    let current = await axios.get(query + '.json')
+    current = current.data;
+    return axios.put(query + '.json', current - 0 + 1)
+          .then(({data})=>{
+            return data
+          })
   }
 }

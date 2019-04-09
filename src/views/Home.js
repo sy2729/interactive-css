@@ -83,7 +83,7 @@ class Home extends Component {
          >
          </Header>
 
-         <div className="w-100 m-t-10 m-b-10 flex align-center justify-space-around" style={{padding: '1em'}}>
+         <div className="w-100 m-t-10 m-b-10 flex align-center justify-space-around flex-wrap" style={{padding: '1em'}}>
           <div>
             <h1 className="t-left">Graduation Countdown</h1>
             <Countdown
@@ -96,7 +96,7 @@ class Home extends Component {
             <img className="w-100" src="/img/graduation.jpg" />
           </div>
          </div>
-        <footer className="w-100 p-20 white flex justify-space-around align-center" style={{background: '#131026'}}>
+        <footer className="w-100 p-20 white flex justify-space-around align-center flex-wrap" style={{background: '#131026'}}>
           <p className='m-0 bold'>All Rights reserved. Made with ❤️ by Shuai</p>
           <div className="flex">
             <a className="m-r-1" href={`mailto:${this.props.user && this.props.user.email}`}>Contact me</a>
