@@ -62,7 +62,7 @@ class Home extends Component {
                   <div className="m-t-3">
                   {this.props.user ?
                    <Link className="no-text-decoration" to="/course"><Button className="bold">Continue on your course</Button></Link>
-                   : <Button className="bold">Start your journey</Button>}
+                   : <Link className="no-text-decoration" to="/course"><Button className="bold">Start your journey</Button></Link>}
                   </div>
                 </div>
             </div>

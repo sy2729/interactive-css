@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Row, Col } from 'antd';
+import { Row, message } from 'antd';
 import { Route } from 'react-router-dom'
 import { connect } from "react-redux";
 import { BgContainer } from '../components/style-components';
@@ -34,6 +34,13 @@ class CourseBoard extends Component {
   }
 
   componentWillMount(){
+    // redirect to home if not login
+    if(!this.props.user) {
+      message.warning('please log in first')
+      this.props.history.push("/")
+      return
+    }
+
     setTimeout(()=>{
       API.getCourseInfo()
         .then(({data})=>{
