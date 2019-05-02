@@ -100,7 +100,7 @@ class Home extends Component {
           <p className='m-0 bold'>All Rights reserved. Made with ❤️ by Shuai</p>
           <div className="flex">
             <a className="m-r-1" href={`mailto:${this.props.user && this.props.user.email}`}>Contact me</a>
-            <a  target="_blank" hre="shuaiyuan.me">Who Am I</a>
+            <a  target="_blank" href="shuaiyuan.me">Who Am I</a>
           </div>
         </footer>
       </div>      
